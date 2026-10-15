@@ -28,7 +28,10 @@ more_movies = [
     :description => "T'Challa returns home to Wakanda to take the throne and must defend it from a dangerous challenger."},
   {:title => 'Everything Everywhere All at Once', :rating => 'R',
     :release_date => '25-Mar-2022',
-    :description => 'A laundromat owner discovers she must connect with versions of herself in parallel universes to save the multiverse.'}
+    :description => 'A laundromat owner discovers she must connect with versions of herself in parallel universes to save the multiverse.'},
+  {:title => 'Demon Slayer: Kimetsu no Yaiba – Infinity Castle', :rating => 'R',
+    :release_date => '12-Sep-2025',
+    :description => "Tanjiro and the Demon Slayer Corps are drawn into Muzan's shifting Infinity Castle for the start of their final battle against the Upper Rank demons."}
 ]
 
 more_movies.each do |movie|
