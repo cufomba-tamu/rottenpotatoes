@@ -1,10 +1,259 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
+/* RottenPotatoes: hand-written styles, no CSS libraries. */
+
+:root {
+  --potato-dark: #3b2a1a;
+  --potato: #8a5a2b;
+  --cream: #faf6ef;
+  --card: #ffffff;
+  --border: #e4dccf;
+  --text: #2b2118;
+  --muted: #6f6253;
+  --accent: #c0392b;
+  --accent-dark: #962d22;
+  --sorted-asc: #fde9b8;   /* warm amber: ascending */
+  --sorted-desc: #cfe5f0;  /* cool blue: descending */
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  background: var(--cream);
+  color: var(--text);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2, .brand, .button, th, label {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+a { color: var(--accent); }
+a:hover { color: var(--accent-dark); }
+
+.container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+main.container { flex: 1; padding-top: 24px; padding-bottom: 40px; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Header and footer */
+
+.site-header {
+  background: var(--potato-dark);
+  color: var(--cream);
+  border-bottom: 4px solid var(--accent);
+  padding: 14px 0;
+}
+
+.site-header .container {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.brand {
+  color: var(--cream);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.brand:hover { color: #fff; }
+
+.tagline { color: #d9c7ad; font-style: italic; }
+
+.site-footer {
+  background: var(--potato-dark);
+  color: #d9c7ad;
+  font-size: 0.9rem;
+  padding: 14px 0;
+  text-align: center;
+}
+
+/* Page heading, flash messages, buttons */
+
+.page-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.page-heading h1 { margin: 0; }
+
+.flash {
+  padding: 10px 14px;
+  border-radius: 6px;
+  border-left: 5px solid;
+}
+.flash-notice { background: #e6f4e4; border-color: #3c8d36; }
+.flash-alert { background: #fbe4e1; border-color: var(--accent); }
+
+.button {
+  display: inline-block;
+  padding: 8px 16px;
+  border: 2px solid var(--accent);
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+.button:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+
+.button-secondary { background: transparent; color: var(--accent); }
+.button-secondary:hover { background: var(--accent); color: #fff; }
+
+.button-danger { background: #fff; color: #a32020; border-color: #a32020; }
+.button-danger:hover { background: #a32020; border-color: #a32020; }
+
+.actions-bar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 20px;
+}
+.actions-bar form { margin: 0; }
+
+/* Movies table */
+
+.table-wrap { overflow-x: auto; }
+
+.movies-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(59, 42, 26, 0.08);
+}
+
+.movies-table th,
+.movies-table td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.movies-table thead th {
+  background: var(--potato);
+  color: #fff;
+}
+
+.sort-link { color: inherit; text-decoration: none; display: block; }
+.sort-link:hover { text-decoration: underline; color: inherit; }
+.sort-arrow { font-size: 0.8em; margin-left: 4px; }
+
+/* Highlight the sorted column; color shows direction, arrow repeats it. */
+.movies-table thead th.sorted-asc { background: #d9a441; color: var(--potato-dark); }
+.movies-table thead th.sorted-desc { background: #4f8fae; color: #fff; }
+.movies-table td.sorted-asc { background: var(--sorted-asc); }
+.movies-table td.sorted-desc { background: var(--sorted-desc); }
+
+.movies-table tbody tr:hover td { filter: brightness(0.96); }
+
+.movie-title { font-weight: 600; text-decoration: none; }
+.actions { text-align: right; white-space: nowrap; }
+
+.movies-table tfoot td {
+  background: #f3ece1;
+  color: var(--muted);
+  font-size: 0.9rem;
+  border-bottom: none;
+}
+
+.rating-badge {
+  display: inline-block;
+  min-width: 3.2em;
+  padding: 1px 8px;
+  border: 1px solid var(--potato);
+  border-radius: 4px;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-align: center;
+  background: #fff;
+}
+
+/* Cards: movie details and forms */
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-top: 6px solid var(--accent);
+  border-radius: 8px;
+  padding: 20px 24px;
+  box-shadow: 0 2px 6px rgba(59, 42, 26, 0.08);
+}
+
+.movie-card h1 { margin-top: 0; }
+
+.movie-details {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 8px 20px;
+  margin: 0;
+}
+.movie-details dt { font-weight: 700; color: var(--muted); }
+.movie-details dd { margin: 0; }
+
+.movie-form { display: grid; gap: 14px; }
+
+.field label { display: block; font-weight: 600; margin-bottom: 4px; }
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #c9bca8;
+  border-radius: 6px;
+  font: inherit;
+  background: #fffdf9;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.form-errors {
+  background: #fbe4e1;
+  border-left: 5px solid var(--accent);
+  padding: 8px 14px;
+  border-radius: 6px;
+}
+.form-errors h2 { font-size: 1rem; margin: 4px 0; }
+
+@media (max-width: 560px) {
+  .field-row { grid-template-columns: 1fr; }
+  .movie-details { grid-template-columns: 1fr; }
+  .movie-details dd { margin-bottom: 8px; }
+}

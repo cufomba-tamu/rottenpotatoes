@@ -1,22 +1,14 @@
-<div id="<%= dom_id movie %>">
-  <div>
-    <strong>Title:</strong>
-    <%= movie.title %>
-  </div>
+<article id="<%= dom_id movie %>" class="card movie-card">
+  <h1><%= movie.title %></h1>
 
-  <div>
-    <strong>Rating:</strong>
-    <%= movie.rating %>
-  </div>
+  <dl class="movie-details">
+    <dt>Rating</dt>
+    <dd><span class="rating-badge"><%= movie.rating %></span></dd>
 
-  <div>
-    <strong>Description:</strong>
-    <%= movie.description %>
-  </div>
+    <dt>Release date</dt>
+    <dd><%= format_release_date(movie) %></dd>
 
-  <div>
-    <strong>Release date:</strong>
-    <%= movie.release_date %>
-  </div>
-
-</div>
+    <dt>Description</dt>
+    <dd><%= movie.description.presence || "No description yet." %></dd>
+  </dl>
+</article>

@@ -2,8 +2,14 @@ class MoviesController < ApplicationController
   before_action :set_movie, only: %i[ show edit update destroy ]
 
   # GET /movies or /movies.json
+  # Sorting comes from params when the user clicks a column header, otherwise
+  # from the session, so the chosen order survives visits to other pages.
   def index
-    @movies = Movie.all
+    @sort_column = sort_column
+    @sort_direction = sort_direction
+    session[:sort] = @sort_column
+    session[:direction] = @sort_direction
+    @movies = Movie.sorted_by(@sort_column, @sort_direction)
   end
 
   # GET /movies/1 or /movies/1.json
@@ -61,6 +67,15 @@ class MoviesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_movie
       @movie = Movie.find(params.expect(:id))
+    end
+
+    # Use the first valid choice: the request, then the session, then a default.
+    def sort_column
+      [ params[:sort], session[:sort] ].find { |c| Movie::SORTABLE_COLUMNS.include?(c) } || "title"
+    end
+
+    def sort_direction
+      [ params[:direction], session[:direction] ].find { |d| Movie::SORT_DIRECTIONS.include?(d) } || "asc"
     end
 
     # Only allow a list of trusted parameters through.

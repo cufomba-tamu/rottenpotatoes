@@ -1,16 +1,40 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Movies" %>
 
-<h1>Movies</h1>
-
-<div id="movies">
-  <% @movies.each do |movie| %>
-    <%= render movie %>
-    <p>
-      <%= link_to "Show this movie", movie %>
-    </p>
-  <% end %>
+<div class="page-heading">
+  <h1>All Movies</h1>
+  <%= link_to "+ Add new movie", new_movie_path, class: "button" %>
 </div>
 
-<%= link_to "New movie", new_movie_path %>
+<div class="table-wrap">
+  <table id="movies" class="movies-table">
+    <caption class="visually-hidden">
+      Movies, sorted by <%= @sort_column.humanize.downcase %> (<%= @sort_direction == "asc" ? "ascending" : "descending" %>)
+    </caption>
+    <thead>
+      <tr>
+        <%= sortable_header "title", "Title" %>
+        <%= sortable_header "rating", "Rating" %>
+        <%= sortable_header "release_date", "Release Date" %>
+        <th scope="col"><span class="visually-hidden">Actions</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @movies.each do |movie| %>
+        <tr id="<%= dom_id movie %>">
+          <td class="<%= sorted_cell_class("title") %>"><%= link_to movie.title, movie, class: "movie-title" %></td>
+          <td class="<%= sorted_cell_class("rating") %>"><span class="rating-badge"><%= movie.rating %></span></td>
+          <td class="<%= sorted_cell_class("release_date") %>"><%= format_release_date(movie) %></td>
+          <td class="actions"><%= link_to "Details", movie %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="4">
+          <%= pluralize(@movies.size, "movie") %>
+          &middot; Click a column header to sort; click it again to reverse the order.
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
